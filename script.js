@@ -21,25 +21,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('quote-form');
     if (form) {
         form.addEventListener('submit', function (e) {
-            e.preventDefault();
+            // e.preventDefault(); // Temporarily disabled for activation debugging
             const btn = this.querySelector('.btn-submit');
             const originalText = btn.textContent;
 
             btn.textContent = 'Invio in corso...';
             btn.disabled = true;
 
-            // Simulate API call
-            setTimeout(() => {
-                alert('Grazie! La tua richiesta è stata ricevuta. Ti contatteremo entro 24 ore.');
-                btn.textContent = originalText;
-                btn.disabled = false;
-                this.reset();
-                if (fileCustom) {
-                    fileCustom.textContent = 'Carica file...';
-                    fileCustom.style.borderColor = 'var(--color-border)';
-                    fileCustom.style.color = 'var(--color-text-light)';
-                }
-            }, 1500);
+            const formData = new FormData(this);
+
+            // Use FormSubmit.co AJAX endpoint
+            // IMPORTANT: Replace TUO_INDIRIZZO_EMAIL with your actual email address
+            fetch('https://formsubmit.co/ajax/sales@rosman.it', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success === 'true' || data.success === true) {
+                        alert('Grazie! La tua richiesta è stata ricevuta. Ti contatteremo entro 24 ore.');
+                        this.reset();
+                        if (fileCustom) {
+                            fileCustom.textContent = 'Carica file...';
+                            fileCustom.style.borderColor = 'var(--color-border)';
+                            fileCustom.style.color = 'var(--color-text-light)';
+                        }
+                    } else {
+                        alert('Qualcosa è andato storto. Per favore riprova o scrivici direttamente.');
+                        console.error('FormSubmit error:', data);
+                    }
+                })
+                .catch(error => {
+                    alert('Si è verificato un errore di connessione. Per favore riprova.');
+                    console.error('Fetch error:', error);
+                })
+                .finally(() => {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                });
         });
     }
 

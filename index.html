@@ -213,7 +213,14 @@
                 </ul>
             </div>
             <div class="funnel-form-wrapper">
-                <form id="quote-form" class="quote-form">
+                <form id="quote-form" class="quote-form" action="https://formsubmit.co/sales@rosman.it" method="POST">
+                    <!-- FormSubmit.co Configuration -->
+                    <input type="hidden" name="_subject" value="Nuova richiesta preventivo da BrandBase">
+                    <input type="hidden" name="_captcha" value="false">
+                    <!-- Disable captcha for cleaner UX if desired, or remove to enable -->
+                    <input type="hidden" name="_template" value="table">
+                    <!-- <input type="hidden" name="_next" value="https://yourdomain.com/thanks.html"> Optional custom thank you page -->
+
                     <div class="form-group">
                         <label for="products">A cosa sei interessato?</label>
                         <select id="products" name="products" required>
