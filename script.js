@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('quote-form');
     if (form) {
         form.addEventListener('submit', function (e) {
-            // e.preventDefault(); // Temporarily disabled for activation debugging
+            e.preventDefault();
             const btn = this.querySelector('.btn-submit');
             const originalText = btn.textContent;
 
